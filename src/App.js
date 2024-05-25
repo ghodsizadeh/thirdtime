@@ -8,7 +8,7 @@ function App() {
   const [breakTime, setBreakTime] = useState(0);
   const [isWorking, setIsWorking] = useState(false); // true means work time, false means break time
   const [timer, setTimer] = useState(false);
-console.log({workTime, breakTime, isWorking, timer})
+  console.log({ workTime, breakTime, isWorking, timer });
   useEffect(() => {
     if (timer) {
       const interval = setInterval(() => {
@@ -17,9 +17,9 @@ console.log({workTime, breakTime, isWorking, timer})
         } else {
           setBreakTime((prev) => prev - 1);
           if (breakTime <= 0) {
+            notifyEndOfBreak();
 
             reset();
-
           }
         }
       }, 1000); // Update every second
@@ -31,12 +31,16 @@ console.log({workTime, breakTime, isWorking, timer})
   const startWork = () => {
     setIsWorking(true);
     setTimer(true);
-    
+  };
+
+  const notifyEndOfBreak = () => {
+    const audio = document.getElementById("audio");
+    audio.play();
   };
 
   const takeBreak = () => {
     setIsWorking(false);
-    console.log('setbrake',{workTime, ff: (Math.floor(workTime / 3))})
+    console.log("setbrake", { workTime, ff: Math.floor(workTime / 3) });
     setBreakTime(Math.floor(workTime / 3));
     setTimer(true);
   };
@@ -56,20 +60,37 @@ console.log({workTime, breakTime, isWorking, timer})
 
   return (
     <div className="relative flex items-center justify-center h-screen bg-gray-900 text-white">
-      <Ripple size={300} //color="bg-blue-500"
-      color={isWorking ? "bg-green-500": "bg-blue-500"  }
-       opacity={0.2} numCircles={6} delay={0.1} />
+      <audio
+        hidden
+        id="audio"
+        src="https://cdnjs.cloudflare.com/ajax/libs/ion-sound/3.0.7/sounds/bell_ring.mp3"
+      ></audio>
+
+      <Ripple
+        size={300} //color="bg-blue-500"
+        color={isWorking ? "bg-green-500" : "bg-blue-500"}
+        opacity={0.2}
+        numCircles={6}
+        delay={0.1}
+      />
       <div className="relative z-10 p-6 text-center">
         <h1 className="text-4xl font-bold mb-4">Third Time Management</h1>
         <div className="mb-4">
-          <p>{isWorking ? "Work Time" : "Break Time"}: {formatTime(isWorking ? workTime : breakTime)}</p>
+          <p>
+            {isWorking || breakTime === 0 ? "Work Time" : "Break Time"}:{" "}
+            {formatTime(isWorking ? workTime : breakTime)}
+          </p>
         </div>
         <div className="space-x-4">
           <button
-            className={`px-4 py-2 ${isWorking ?   "bg-green-500 hover:bg-green-700" : "bg-blue-500 hover:bg-blue-700"} rounded`}
-            onClick={isWorking ? takeBreak : startWork }
+            className={`px-4 py-2 ${
+              isWorking
+                ? "bg-green-500 hover:bg-green-700"
+                : "bg-blue-500 hover:bg-blue-700"
+            } rounded`}
+            onClick={isWorking ? takeBreak : startWork}
           >
-            {isWorking ? "Take Break":  "Start Work" }
+            {isWorking ? "Take Break" : "Start Work"}
           </button>
           <button
             className="px-4 py-2 bg-red-500 hover:bg-red-700 rounded"
