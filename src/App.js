@@ -57,7 +57,7 @@ console.log({workTime, breakTime, isWorking, timer})
   return (
     <div className="relative flex items-center justify-center h-screen bg-gray-900 text-white">
       <Ripple size={300} //color="bg-blue-500"
-      color={isWorking ? "bg-blue-500" : "bg-green-500"}
+      color={isWorking ? "bg-green-500": "bg-blue-500"  }
        opacity={0.2} numCircles={6} delay={0.1} />
       <div className="relative z-10 p-6 text-center">
         <h1 className="text-4xl font-bold mb-4">Third Time Management</h1>
