@@ -1,5 +1,5 @@
 // src/components/Ripple.js
-import React, { CSSProperties } from "react";
+import React from "react";
 
 const Ripple = React.memo(({ size, color, opacity, numCircles, delay }) => {
   const MAIN_CIRCLE_SIZE = size || 210;
