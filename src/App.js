@@ -8,7 +8,6 @@ function App() {
   const [breakTime, setBreakTime] = useState(0);
   const [isWorking, setIsWorking] = useState(false); // true means work time, false means break time
   const [timer, setTimer] = useState(false);
-  console.log({ workTime, breakTime, isWorking, timer });
   useEffect(() => {
     if (timer) {
       const interval = setInterval(() => {
@@ -40,7 +39,6 @@ function App() {
 
   const takeBreak = () => {
     setIsWorking(false);
-    console.log("setbrake", { workTime, ff: Math.floor(workTime / 3) });
     setBreakTime(Math.floor(workTime / 3));
     setTimer(true);
   };
